@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IGatherable
 {
-    public void Gather(Player player);
+    public void Gather(PlayerGathering player);
     public ResourceType GetResourceType();
 }

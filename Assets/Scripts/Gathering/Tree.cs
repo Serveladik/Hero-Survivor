@@ -27,7 +27,7 @@ public class Tree : MonoBehaviour, IGatherable
     {
         return woodType;
     }
-    public void Gather(Player player)
+    public void Gather(PlayerGathering player)
     {
         if (player.tool.CanMine(woodType) && !isRespawning && !isBeingMined)
         {
@@ -39,7 +39,7 @@ public class Tree : MonoBehaviour, IGatherable
         }
     }
 
-    private IEnumerator ChopCoroutine(Player player)
+    private IEnumerator ChopCoroutine(PlayerGathering player)
     {
         isBeingMined = true;
         StartCoroutine(WobbleChildren());

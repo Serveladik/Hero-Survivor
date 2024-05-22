@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerGathering : MonoBehaviour
 {
     public Resource resource;
     public Tool tool;

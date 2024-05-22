@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class UpgradeSystem : MonoBehaviour
 {
-    public Player player;
+    public PlayerGathering player;
     public ResourceType requiredResourceForAxeUpgrade;
     public int resourceAmountForAxeUpgrade = 10;
 

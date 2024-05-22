@@ -29,7 +29,7 @@ public class Rock : MonoBehaviour, IGatherable
         return rockType;
     }
 
-    public void Gather(Player player)
+    public void Gather(PlayerGathering player)
     {
         if (player.tool.CanMine(rockType) && !isRespawning && !isBeingMined)
         {
@@ -41,7 +41,7 @@ public class Rock : MonoBehaviour, IGatherable
         }
     }
 
-    private IEnumerator ChopCoroutine(Player player)
+    private IEnumerator ChopCoroutine(PlayerGathering player)
     {
         isBeingMined = true;
         StartCoroutine(WobbleChildren());
