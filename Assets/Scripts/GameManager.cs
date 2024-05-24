@@ -6,8 +6,10 @@ using CnControls;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; set;}
+    public GameObject player;
+    public PlayerGathering playerGathering;
     public SimpleJoystick joystick;
-    void Start()
+    void Awake()
     {
         if(Instance == null)
         {
@@ -15,8 +17,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void DontDestroyOnLoad()
     {
         
     }

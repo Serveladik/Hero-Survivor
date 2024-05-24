@@ -3,34 +3,89 @@ using UnityEngine;
 
 public class Resource : MonoBehaviour
 {
-    private Dictionary<ResourceType, int> resources = new Dictionary<ResourceType, int>();
+    private Dictionary<ResourceTypeWood, int> resourcesWood = new Dictionary<ResourceTypeWood, int>();
+    private Dictionary<ResourceTypeRock, int> resourcesRock = new Dictionary<ResourceTypeRock, int>();
+    private Dictionary<ResourceTypeSword, int> resourcesSword = new Dictionary<ResourceTypeSword, int>();
 
-    // Method to collect a specific resource
-    public void Collect(ResourceType type, int amount)
+    public void CollectWood(ResourceTypeWood type, int amount)
     {
-        if (resources.ContainsKey(type))
+        if (resourcesWood.ContainsKey(type))
         {
-            resources[type] += amount;
+            resourcesWood[type] += amount;
         }
         else
         {
-            resources[type] = amount;
+            resourcesWood[type] = amount;
         }
-        Debug.Log($"Collected {amount} of {type}. Total: {resources[type]}");
+        Debug.Log($"Collected {amount} of {type}. Total: {resourcesWood[type]}");
     }
 
-    // Get the amount of a specific resource
-    public int GetAmount(ResourceType type)
+    public void CollectRock(ResourceTypeRock type, int amount)
     {
-        return resources.ContainsKey(type) ? resources[type] : 0;
-    }
-
-    // Deduct resources
-    public bool Deduct(ResourceType type, int amount)
-    {
-        if (resources.ContainsKey(type) && resources[type] >= amount)
+        if (resourcesRock.ContainsKey(type))
         {
-            resources[type] -= amount;
+            resourcesRock[type] += amount;
+        }
+        else
+        {
+            resourcesRock[type] = amount;
+        }
+        Debug.Log($"Collected {amount} of {type}. Total: {resourcesRock[type]}");
+    }
+
+    public void CollectSword(ResourceTypeSword type, int amount)
+    {
+        if (resourcesSword.ContainsKey(type))
+        {
+            resourcesSword[type] += amount;
+        }
+        else
+        {
+            resourcesSword[type] = amount;
+        }
+        Debug.Log($"Collected {amount} of {type}. Total: {resourcesSword[type]}");
+    }
+
+    public int GetAmount(ResourceTypeWood type)
+    {
+        return resourcesWood.ContainsKey(type) ? resourcesWood[type] : 0;
+    }
+
+    public int GetAmount(ResourceTypeRock type)
+    {
+        return resourcesRock.ContainsKey(type) ? resourcesRock[type] : 0;
+    }
+
+    public int GetAmount(ResourceTypeSword type)
+    {
+        return resourcesSword.ContainsKey(type) ? resourcesSword[type] : 0;
+    }
+
+    public bool DeductResources(ResourceTypeWood type, int amount)
+    {
+        if (resourcesWood.ContainsKey(type) && resourcesWood[type] >= amount)
+        {
+            resourcesWood[type] -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    public bool DeductResources(ResourceTypeRock type, int amount)
+    {
+        if (resourcesRock.ContainsKey(type) && resourcesRock[type] >= amount)
+        {
+            resourcesRock[type] -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    public bool DeductResources(ResourceTypeSword type, int amount)
+    {
+        if (resourcesSword.ContainsKey(type) && resourcesSword[type] >= amount)
+        {
+            resourcesSword[type] -= amount;
             return true;
         }
         return false;

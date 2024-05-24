@@ -11,31 +11,53 @@ public class PlayerGathering : MonoBehaviour
         foreach (var collider in colliders)
         {
             IGatherable gatherable = collider.GetComponent<IGatherable>();
-            if (gatherable != null && tool.CanMine(gatherable.GetResourceType()))
+            if (gatherable != null)
             {
                 gatherable.Gather(this);
-                Debug.LogError("Gathering " + gatherable.GetType().Name);
             }
         }
     }
 
-
-    // Collect resources via the Resource component
-    public void CollectResource(ResourceType type, int amount)
+    // Collect wood resources
+    public void CollectResource(ResourceTypeWood type, int amount)
     {
-        resource.Collect(type, (int)(amount * tool.GetMiningSpeedMultiplier()));
+        resource.CollectWood(type, (int)(amount * tool.GetMiningSpeedMultiplier()));
     }
 
-    // Mine resources
-    public void MineResource(ResourceType type, int baseAmount)
+    // Collect rock resources
+    public void CollectResource(ResourceTypeRock type, int amount)
     {
-        if (tool.CanMine(type))
+        resource.CollectRock(type, (int)(amount * tool.GetMiningSpeedMultiplier()));
+    }
+
+    public void CollectResource(ResourceTypeSword type, int amount)
+    {
+        resource.CollectSword(type, (int)(amount * tool.GetMiningSpeedMultiplier()));
+    }
+
+    // Mine wood resources
+    public void MineResource(ResourceTypeWood type, int baseAmount)
+    {
+        if (tool.CanGatherWood(type))
         {
             CollectResource(type, baseAmount);
         }
         else
         {
-            Debug.Log($"Cannot mine {type} yet. Upgrade required.");
+            Debug.Log($"Cannot gather {type}. Upgrade required.");
+        }
+    }
+
+    // Mine rock resources
+    public void MineResource(ResourceTypeRock type, int baseAmount)
+    {
+        if (tool.CanGatherRock(type))
+        {
+            CollectResource(type, baseAmount);
+        }
+        else
+        {
+            Debug.Log($"Cannot gather {type}. Upgrade required.");
         }
     }
 }

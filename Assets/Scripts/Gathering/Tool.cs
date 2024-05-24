@@ -3,36 +3,50 @@ using UnityEngine;
 
 public class Tool : MonoBehaviour
 {
-    private Dictionary<ResourceType, bool> resourceAccess = new Dictionary<ResourceType, bool>();
+    private Dictionary<ResourceTypeWood, bool> woodResourceAccess = new Dictionary<ResourceTypeWood, bool>();
+    private Dictionary<ResourceTypeRock, bool> rockResourceAccess = new Dictionary<ResourceTypeRock, bool>();
+    private Dictionary<ResourceTypeSword, bool> swordResourceAccess = new Dictionary<ResourceTypeSword, bool>();
     private float miningSpeedMultiplier = 1.0f;
     private int axeLevel = 0;
     private int pickaxeLevel = 0;
+    private int swordLevel = 0;
     public bool axeUpgradedThisLevel = false;
     public bool pickaxeUpgradedThisLevel = false;
+    public bool swordUpgradedThisLevel = false;
 
     private void Start()
     {
         // Initialize the default resources that can be accessed
-        resourceAccess[ResourceType.OakWood] = true; // Default wood type
-        resourceAccess[ResourceType.IronOre] = true; // Default rock type
+        woodResourceAccess[ResourceTypeWood.OakWood] = true; // Default wood type
+        rockResourceAccess[ResourceTypeRock.IronOre] = true; // Default rock type
     }
-    public void UpgradeAxe(ResourceType newResource)
+
+    public void UpgradeAxe(ResourceTypeWood newResource)
     {
-        resourceAccess[newResource] = true;
+        woodResourceAccess[newResource] = true;
         axeLevel++;
         axeUpgradedThisLevel = true;
         UpdateMiningSpeed();
-        Debug.Log($"Axe upgraded. Now can mine {newResource} and current level resources faster.");
+        Debug.Log($"Axe upgraded. Now can gather {newResource} and current level resources faster.");
     }
 
     // Upgrade pickaxe to access new resources and increase mining speed
-    public void UpgradePickaxe(ResourceType newResource)
+    public void UpgradePickaxe(ResourceTypeRock newResource)
     {
-        resourceAccess[newResource] = true;
+        rockResourceAccess[newResource] = true;
         pickaxeLevel++;
         pickaxeUpgradedThisLevel = true;
         UpdateMiningSpeed();
-        Debug.Log($"Pickaxe upgraded. Now can mine {newResource} and current level resources faster.");
+        Debug.Log($"Pickaxe upgraded. Now can gather {newResource} and current level resources faster.");
+    }
+
+    public void UpgradeSword(ResourceTypeSword newResource)
+    {
+        swordResourceAccess[newResource] = true;
+        swordLevel++;
+        swordUpgradedThisLevel = true;
+        UpdateMiningSpeed();
+        Debug.Log($"Pickaxe upgraded. Now can gather {newResource} and current level resources faster.");
     }
 
     // Update mining speed based on tool levels
@@ -41,10 +55,21 @@ public class Tool : MonoBehaviour
         miningSpeedMultiplier = 1.0f + 0.5f * Mathf.Min(axeLevel, pickaxeLevel);  // Example: 1.5x speed per level
     }
 
-    // Check if a resource can be mined
-    public bool CanMine(ResourceType type)
+    // Check if a wood resource can be gathered
+    public bool CanGatherWood(ResourceTypeWood type)
     {
-        return resourceAccess.ContainsKey(type) && resourceAccess[type];
+        return woodResourceAccess.ContainsKey(type) && woodResourceAccess[type];
+    }
+
+    // Check if a rock resource can be gathered
+    public bool CanGatherRock(ResourceTypeRock type)
+    {
+        return rockResourceAccess.ContainsKey(type) && rockResourceAccess[type];
+    }
+
+    public bool CanGatherSword(ResourceTypeSword type)
+    {
+        return swordResourceAccess.ContainsKey(type) && swordResourceAccess[type];
     }
 
     // Reset upgrade flags for the new level
