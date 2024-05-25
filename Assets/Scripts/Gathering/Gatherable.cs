@@ -8,7 +8,7 @@ public abstract class Gatherable : MonoBehaviour, IGatherable
     public float wobbleDuration = 0.2f;
     public float wobbleAmount = 0.1f;
 
-    protected bool isRespawning = false;
+    protected bool isSpawning = false;
     protected bool isBeingMined = false;
     protected Vector3[] originalScales;
 
@@ -26,7 +26,11 @@ public abstract class Gatherable : MonoBehaviour, IGatherable
     public abstract ResourceTypeWood GetWoodResourceType();
     public abstract ResourceTypeRock GetRockResourceType();
     public abstract ResourceTypeSword GetSwordResourceType();
-
+    
+    public bool IsSpawning()
+    {
+        return isSpawning;
+    }
     public void Gather(PlayerGathering player)
     {
         ResourceTypeWood woodType = GetWoodResourceType();
@@ -39,6 +43,7 @@ public abstract class Gatherable : MonoBehaviour, IGatherable
             player.tool.CanGatherSword(swordType)))
         {
             StartCoroutine(ChopCoroutine(player, woodType, rockType, swordType));
+            ResourceManagerUI.ResourceGathered?.Invoke();
         }
         else
         {
@@ -116,12 +121,12 @@ public abstract class Gatherable : MonoBehaviour, IGatherable
 
     private IEnumerator Respawn()
     {
-        isRespawning = true;
+        isSpawning = true;
         yield return new WaitForSeconds(respawnTime);
         foreach (Transform child in transform)
         {
             child.gameObject.SetActive(true);
         }
-        isRespawning = false;
+        isSpawning = false;
     }
 }

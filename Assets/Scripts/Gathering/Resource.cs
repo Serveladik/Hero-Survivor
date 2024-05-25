@@ -1,71 +1,50 @@
 using System.Collections.Generic;
+using System.Resources;
 using UnityEngine;
 
 public class Resource : MonoBehaviour
 {
-    private Dictionary<ResourceTypeWood, int> resourcesWood = new Dictionary<ResourceTypeWood, int>();
-    private Dictionary<ResourceTypeRock, int> resourcesRock = new Dictionary<ResourceTypeRock, int>();
-    private Dictionary<ResourceTypeSword, int> resourcesSword = new Dictionary<ResourceTypeSword, int>();
+    public List<WoodResource> woodResources;
+    public List<RockResource> rockResources;
+    public List<SwordResource> swordResources;
 
+    
     public void CollectWood(ResourceTypeWood type, int amount)
     {
-        if (resourcesWood.ContainsKey(type))
+        WoodResource resource = woodResources.Find(r => r.resourceType == type);
+        if (resource != null)
         {
-            resourcesWood[type] += amount;
+            resource.amount += amount;
+            Debug.Log($"Collected {amount} of {type}. Total: {resource.amount}");
         }
-        else
-        {
-            resourcesWood[type] = amount;
-        }
-        Debug.Log($"Collected {amount} of {type}. Total: {resourcesWood[type]}");
     }
 
     public void CollectRock(ResourceTypeRock type, int amount)
     {
-        if (resourcesRock.ContainsKey(type))
+        RockResource resource = rockResources.Find(r => r.resourceType == type);
+        if (resource != null)
         {
-            resourcesRock[type] += amount;
+            resource.amount += amount;
+            Debug.Log($"Collected {amount} of {type}. Total: {resource.amount}");
         }
-        else
-        {
-            resourcesRock[type] = amount;
-        }
-        Debug.Log($"Collected {amount} of {type}. Total: {resourcesRock[type]}");
     }
 
     public void CollectSword(ResourceTypeSword type, int amount)
     {
-        if (resourcesSword.ContainsKey(type))
+        SwordResource resource = swordResources.Find(r => r.resourceType == type);
+        if (resource != null)
         {
-            resourcesSword[type] += amount;
+            resource.amount += amount;
+            Debug.Log($"Collected {amount} of {type}. Total: {resource.amount}");
         }
-        else
-        {
-            resourcesSword[type] = amount;
-        }
-        Debug.Log($"Collected {amount} of {type}. Total: {resourcesSword[type]}");
-    }
-
-    public int GetAmount(ResourceTypeWood type)
-    {
-        return resourcesWood.ContainsKey(type) ? resourcesWood[type] : 0;
-    }
-
-    public int GetAmount(ResourceTypeRock type)
-    {
-        return resourcesRock.ContainsKey(type) ? resourcesRock[type] : 0;
-    }
-
-    public int GetAmount(ResourceTypeSword type)
-    {
-        return resourcesSword.ContainsKey(type) ? resourcesSword[type] : 0;
     }
 
     public bool DeductResources(ResourceTypeWood type, int amount)
     {
-        if (resourcesWood.ContainsKey(type) && resourcesWood[type] >= amount)
+        WoodResource resource = woodResources.Find(r => r.resourceType == type);
+        if (resource != null && resource.amount >= amount)
         {
-            resourcesWood[type] -= amount;
+            resource.amount -= amount;
             return true;
         }
         return false;
@@ -73,9 +52,10 @@ public class Resource : MonoBehaviour
 
     public bool DeductResources(ResourceTypeRock type, int amount)
     {
-        if (resourcesRock.ContainsKey(type) && resourcesRock[type] >= amount)
+        RockResource resource = rockResources.Find(r => r.resourceType == type);
+        if (resource != null && resource.amount >= amount)
         {
-            resourcesRock[type] -= amount;
+            resource.amount -= amount;
             return true;
         }
         return false;
@@ -83,11 +63,30 @@ public class Resource : MonoBehaviour
 
     public bool DeductResources(ResourceTypeSword type, int amount)
     {
-        if (resourcesSword.ContainsKey(type) && resourcesSword[type] >= amount)
+        SwordResource resource = swordResources.Find(r => r.resourceType == type);
+        if (resource != null && resource.amount >= amount)
         {
-            resourcesSword[type] -= amount;
+            resource.amount -= amount;
             return true;
         }
         return false;
+    }
+
+    public Sprite GetResourceImage(ResourceTypeWood type)
+    {
+        WoodResource resource = woodResources.Find(r => r.resourceType == type);
+        return resource?.image;
+    }
+
+    public Sprite GetResourceImage(ResourceTypeRock type)
+    {
+        RockResource resource = rockResources.Find(r => r.resourceType == type);
+        return resource?.image;
+    }
+
+    public Sprite GetResourceImage(ResourceTypeSword type)
+    {
+        SwordResource resource = swordResources.Find(r => r.resourceType == type);
+        return resource?.image;
     }
 }

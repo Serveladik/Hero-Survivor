@@ -11,53 +11,29 @@ public class PlayerGathering : MonoBehaviour
         foreach (var collider in colliders)
         {
             IGatherable gatherable = collider.GetComponent<IGatherable>();
-            if (gatherable != null)
+            if (gatherable != null && !gatherable.IsSpawning())
             {
                 gatherable.Gather(this);
             }
         }
     }
 
-    // Collect wood resources
     public void CollectResource(ResourceTypeWood type, int amount)
     {
+        //ResourceManagerUI.ResourceGathered?.Invoke();
         resource.CollectWood(type, (int)(amount * tool.GetMiningSpeedMultiplier()));
     }
 
-    // Collect rock resources
     public void CollectResource(ResourceTypeRock type, int amount)
     {
+        //ResourceManagerUI.ResourceGathered?.Invoke();
         resource.CollectRock(type, (int)(amount * tool.GetMiningSpeedMultiplier()));
     }
 
     public void CollectResource(ResourceTypeSword type, int amount)
     {
+        //ResourceManagerUI.ResourceGathered?.Invoke();
         resource.CollectSword(type, (int)(amount * tool.GetMiningSpeedMultiplier()));
     }
 
-    // Mine wood resources
-    public void MineResource(ResourceTypeWood type, int baseAmount)
-    {
-        if (tool.CanGatherWood(type))
-        {
-            CollectResource(type, baseAmount);
-        }
-        else
-        {
-            Debug.Log($"Cannot gather {type}. Upgrade required.");
-        }
-    }
-
-    // Mine rock resources
-    public void MineResource(ResourceTypeRock type, int baseAmount)
-    {
-        if (tool.CanGatherRock(type))
-        {
-            CollectResource(type, baseAmount);
-        }
-        else
-        {
-            Debug.Log($"Cannot gather {type}. Upgrade required.");
-        }
-    }
 }
