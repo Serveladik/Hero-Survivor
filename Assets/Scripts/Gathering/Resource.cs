@@ -45,6 +45,7 @@ public class Resource : MonoBehaviour
         if (resource != null && resource.amount >= amount)
         {
             resource.amount -= amount;
+            ResourceManagerUI.ResourceGathered?.Invoke();
             return true;
         }
         return false;
@@ -56,6 +57,7 @@ public class Resource : MonoBehaviour
         if (resource != null && resource.amount >= amount)
         {
             resource.amount -= amount;
+            ResourceManagerUI.ResourceGathered?.Invoke();
             return true;
         }
         return false;
@@ -67,6 +69,7 @@ public class Resource : MonoBehaviour
         if (resource != null && resource.amount >= amount)
         {
             resource.amount -= amount;
+            ResourceManagerUI.ResourceGathered?.Invoke();
             return true;
         }
         return false;
@@ -89,4 +92,23 @@ public class Resource : MonoBehaviour
         SwordResource resource = swordResources.Find(r => r.resourceType == type);
         return resource?.image;
     }
+
+    public bool HasEnoughResources(ResourceTypeWood type, int amount)
+    {
+        WoodResource resource = woodResources.Find(r => r.resourceType == type);
+        return resource != null && resource.amount >= amount;
+    }
+
+    public bool HasEnoughResources(ResourceTypeRock type, int amount)
+    {
+        RockResource resource = rockResources.Find(r => r.resourceType == type);
+        return resource != null && resource.amount >= amount;
+    }
+
+    public bool HasEnoughResources(ResourceTypeSword type, int amount)
+    {
+        SwordResource resource = swordResources.Find(r => r.resourceType == type);
+        return resource != null && resource.amount >= amount;
+    }
+
 }

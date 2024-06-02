@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f197f4cd07b024f9136783152a5216, type: 3}
   m_Name: OakWoodResource
   m_EditorClassIdentifier: 
-  resourceType: 1
-  amount: 0
   image: {fileID: 0}
+  resourceType: 1
+  amount: 5

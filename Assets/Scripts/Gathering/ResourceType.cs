@@ -22,4 +22,5 @@ public enum ResourceTypeSword
 {
     Default,
     Slime,
+    Spider
 }

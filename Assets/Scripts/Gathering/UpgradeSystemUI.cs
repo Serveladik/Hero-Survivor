@@ -4,8 +4,10 @@ using TMPro;
 using UnityEngine.UI;
 using System;
 
+[RequireComponent(typeof(UpgradeSystem))]
 public class UpgradeSystemUI : MonoBehaviour
 {
+    private UpgradeSystem upgradeSystem;
     public GameObject upgradeUI;
     public float detectionRadius = 5f;
     private PlayerGathering playerGathering;
@@ -14,6 +16,7 @@ public class UpgradeSystemUI : MonoBehaviour
     void Start()
     {
         playerGathering = GameManager.Instance.playerGathering;
+        upgradeSystem = GetComponent<UpgradeSystem>();
         upgradeUI.SetActive(false); // Ensure the UI is initially hidden
         mainCamera = Camera.main; // Get the main camera
     }
@@ -28,13 +31,17 @@ public class UpgradeSystemUI : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, target.position) <= detectionRadius)
         {
-            if (!playerGathering.tool.axeUpgradedThisLevel && !playerGathering.tool.pickaxeUpgradedThisLevel)
+            switch (upgradeSystem.upgradeType)
             {
-                upgradeUI.SetActive(true);
-            }
-            else
-            {
-                upgradeUI.SetActive(false);
+                case UpgradeSystem.UpgradeType.Axe:
+                    upgradeUI.SetActive(!playerGathering.tool.axeUpgradedThisLevel);
+                    break;
+                case UpgradeSystem.UpgradeType.Pickaxe:
+                    upgradeUI.SetActive(!playerGathering.tool.pickaxeUpgradedThisLevel);
+                    break;
+                case UpgradeSystem.UpgradeType.Sword:
+                    upgradeUI.SetActive(!playerGathering.tool.swordUpgradedThisLevel);
+                    break;
             }
         }
         else
@@ -47,7 +54,6 @@ public class UpgradeSystemUI : MonoBehaviour
     {
         if (upgradeUI.activeSelf)
         {
-            // Rotate the UI to face the camera
             Vector3 direction = transform.position - mainCamera.transform.position;
             upgradeUI.transform.rotation = Quaternion.LookRotation(direction);
         }
